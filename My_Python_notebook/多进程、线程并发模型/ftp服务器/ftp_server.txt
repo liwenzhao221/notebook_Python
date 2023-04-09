@@ -1,0 +1,99 @@
+from socket import *
+from threading import Thread
+
+# 全局变量
+HOST
+PORT
+ADDR
+FTP = '/xx/xx/xx/'
+'''
+搞一个文件库，一个文件夹，存放需要上传的文件、可提供用户下载的文件
+
+'''
+
+
+# 创建类实现服务器文件处理功能
+class FTPServer(Thread): # 使用自定义线程类
+	'''
+	查看列表，下载，上传，退出处理
+	'''
+	def __init__(self,connfd):
+		self.confd = confd
+		super().__init__() # 加载父类属性
+	def do_list():
+		#获取文件列表
+		files = os.listdir(FTP)
+		if not files:
+			self.connfd.send('文件库为空'.encode())
+			return
+		else:
+			self.connfd.send(b'OK')
+			time.sleep(0.1)
+		#拼接文件
+		filelist = ''
+		for file in files:
+			if file[0] != '.' and os.path.isfile(FTP+file):
+				filelist += file + '\n'
+		self.connfd.send(filelist.encode())#将拼接好的字符串发送过去
+	def do_get(self,filename):
+		try:
+			f = open(FTP+filename,'rb')
+		except Exception:# 打开失败，文件不存在
+			self.connfd.send('文件不存在'.encode())
+			return
+		else:
+			self.connfd.send(b'OK')
+			time.sleep(0.1)
+		# 发送文件
+		while True:
+			data = f.read(1024)
+			if not data:
+				time.sleep(0.1)
+				self.connfd.send(b'##')
+				break
+			self.connfd.send(data)
+		
+			
+				
+
+	# 循环接受请求，分情况调用功能函数
+	def run(self):
+	while True:
+		data = self.connfd.recv(1024).decode
+		if not data or data == 'Q':
+			return # 线程结束
+		elif data == 'L':
+			self.do_list()
+		elif data[0] == 'G':
+			filename = data.split(' ')[-1]
+			self.do_get(filename)
+
+# 搭建网络服务端模型
+def main():
+	(之前的并发模型，但是这里不需要函数处理操作
+	而是换成了FTPServer类)
+	# 创建套接字
+s = socket()
+s.setsockopt(SOL_SOCKET,SO_REUSEADDR,1)
+s.bind(ADDR)
+s.listen(5)
+
+print('Listen the port 8888..')
+
+# 循环等待客户端连接
+while True:
+	try:
+		c,addr = s.accept()
+		print('connect from:',addr)
+	except KeyboardInterrupt:
+		sys.exit('退出服务器')
+	except Exception as e:
+		print(e)
+		continue
+	# 创建线程处理请求
+	client = FTPServer(c)
+	client.setDaemon(True)
+	client.start() # 运行run
+
+if __name__ == '__main__':
+	main()

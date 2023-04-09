@@ -1,0 +1,98 @@
+IO多路复用
+
+定义：
+同时监控多个IO事件，当哪个IO事件准备就绪就执行哪个IO事件。一次形式可以同时处理多个IO的行为。避免一个IO阻塞造成其他IO均无法执行，提高了IO执行效率。
+
+具体方案：
+select方法----windows linux unix
+poll方法----linux unix
+epoll方法：linux
+
+应用进程将IO给操作系统--操作系统监控IO情况--判断哪个IO能够执行给应用程序进行处理
+
+import select
+dir(select)
+
+select方法：
+监控IO事件，阻塞等待IO发生
+rs,ws,xs = select(rlist,wlist,xlist,[timeout])
+rlist  列表  存放关注的等待发生的IO事件
+wlist  列表  存放关注的要主动处理的IO事件
+xlist  列表  存放关注的出现异常要处理的IO
+timeout  超时时间
+
+返回值：
+rs  列表  rlist中准备就绪的IO
+ws  列表  wlist中准备就绪的IO
+xs  列表  xlist中准别就绪的IO
+
+select函数演示
+
+from select import select
+from socket import *
+ s = socket()
+ s.bind(('0.0.0.0',8888))
+ s.listen(3)
+
+ print('监控IO')
+ rs,ws,xs = select([s],[],[])
+ print('rlist:',rs)
+ print('wlist:',ws)
+ print('xlist:',xs)
+
+ 监听读操作，无法人为决定，需要等待
+
+ select tcp 服务
+ 重点代码
+
+ 思路分析：
+ 1.将关注的IO放入到监控列表
+ 2.当IO就绪时会通过select返回
+ 3.便利返回值列表，得知哪个IO就绪进行处理
+
+
+ from socket import *
+ from select import select
+
+# 创建监听套接字，作为关注的IO
+s = socket()
+s.setsocket(SOL_SOCKET,SO_REUSEADDR,1)
+s.bind(('0.0.0.0',8888))
+s.listen(3)
+
+# 监控IO
+rs,ws,xs = select(rlist,wlist,xlist)
+
+#这里好像缺少了将s加入读监控的操作，但是没有验证，后续如果遇到问题，可以考虑添加加入读监测事件的配置
+
+# 便利返回值列表，处理就绪的IO
+for r in rs:
+	if r is s:
+		c,addr = r.accept()
+		print('Connect from',addr)
+		rlist.append(c)# 增加新的IO关注
+	else:
+		# 有客户端发消息
+		data = r.recv(1024).decode()
+		# 客户端退出
+		if not data:
+			rlist.remove(r)
+			r.close()
+			continue # 跳出for循环，进入外层while循环继续监测
+		print(data)
+		# r.send(b'OK')
+		wlist.append(r) # 给我发消息的客户端
+	'''
+	这里需要在监控IO部分套一个大循环，这里接收到tcp连接就会执行下去，程序就结束了，反复并发需要不断从监听列表中获取监听值
+	'''
+
+for w in ws:
+	w.send(b'OK')
+	wlist.remove(w) # 发完消息移除
+
+	'''
+	wlist中如果存在IO事件，则select立即返回给ws处理IO过程中不要出现死循环占有服务端的情况，IO多路复用消耗资源较少，效率较高
+	'''
+
+for x in xs:
+	pass

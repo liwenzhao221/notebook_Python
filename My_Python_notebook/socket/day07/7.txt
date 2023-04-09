@@ -1,0 +1,45 @@
+前情回顾
+
+1. udp通信
+
+   服务端： socket -> bind -> recvfrom/sendto -> close
+
+   客户端： socket -> sendto/recvfrom -> close
+
+2. 套接字属性
+
+    fileno()
+    getpeername()
+    setsockopt()
+
+3. struct
+
+   功能: 将一组数据打包位bytes，将bytes数据解析为元组
+
+   Struct(fmt)  i -> int  f-> float  s -> bytes
+   pack() 打包
+   unpack() 解包
+
+4. http 协议
+
+   请求格式：  请求行  GET  /   HTTP/1.1
+             请求头
+             空行
+             请求体
+
+   响应格式：  响应行  HTTP/1.1  200  OK
+             响应头
+             空行
+             响应体  具体内容
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,166 @@
+git
+git安装
+sudo apt -get install git
+初始配置
+配置命令：git config
+	配置所有用户：git config --system 选项
+	配置文件位置：/etc/gitconfig
+	配置当前用户：git config --global 选项
+	配置文件位置：~/.gitconfig
+	配置当前项目：git config 选项
+	配置文件位置：project/.git/config
+
+配置用户名：
+
+工作区：项目所在操作目录，实际操作项目的区域
+暂存区：用户记录工作区的工作/修改内容
+仓库区：用于备份工作区的内容
+
+远程仓库：远程主机上的GIT仓库
+
+在本地仓库中，git总是希望工作区的内容与仓库区保持一致，而且只有仓库区的内容才能和其他远程仓库交互
+
+cd ../ ---返回上级目录
+cat /etc/config ------查看配置
+git init ---初始化仓库，将某个项目目录变为git操作目录，生成git本地仓库。即该项目目录可以使用git管理
+ rm -rf .git -----取消仓库的init状态
+git config core.deitor pycharm---配置默认编译器
+ls -a---查看隐藏文件
+cat .git/config---验证core.editor配置
+git config --list---所有配置信息
+git status---查看本地仓库状态
+# 如果存在没有提交到暂存区的文件就会提示
+USER1@DESKTOP-42L1NMR MINGW64 /gitproject (master)
+$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        auto_dictionary/
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+USER1@DESKTOP-42L1NMR MINGW64 /gitproject (master)
+----------------------------------------------------------------------------------
+git add auto_dictionary/# 将文件提交到暂存区，可以提交多个文件用空格间隔 * 提交所有文件
+-----------------------------------------------------------------------------------
+'''
+在Git项目中可以通过在项目的某个文件夹下定义.gitignore文件的方式，规定相应的忽略规则，用来管理当前文件夹下的文件的Git提交行为。.gitignore文件是可以提交到公有仓库中，这就为该项目下的所有开发者都共享一套定义好的忽略规则。在.gitinore文件中，遵循相应的语法，在每一行制定一个忽略规则。
+'''
+.gitinore忽略规则简单说明
+file-------表示忽略file文件
+*.a------表示忽略所有.a结尾的文件
+！lib.a------表示但lib.a除外
+build/------表示忽略build/目录下的所有文件，过滤整个build文件夹；
+$ git rm --cached auto_dictionary/ -r--从暂存区移除，如果不是文件夹可以不需要加-r
+-------------------------------------------------------------------------------------
+暂存区--------仓库---commit
+git commit -m 'init add'---------提交所有暂存区的文件到仓库，附加信息要写
+git commit test.txt -m 'test.txt update' ------提交一个文件
+git log --pretty=oneline--------简化显示方案
+-----------------------------------------------------------------------------------
+一旦某个文件或者文件夹发生了改变，git status就会显示红色
+可以使用git diff test.txt对比变化内容
+如果感觉变动不好，可以使用git checkout -- test.txt对文件进行恢复
+即使rm exec.py删掉文件，一样可以使用上述命令进行恢复
+----------------------------------------------------------------------------------------
+注意这两个操作会修改工作区内容，同时将操作记录提交到暂存区
+与add同级
+git rm xxxx.xx----删除，连同工作区一起删除
+git mv xxx.xx 目的路径 ---------
+提交，git commit -m 'mv and rm'  提交到仓库，在仓库区会做同样的操作
+--------------------------------------------------------------------------------
+git reset --hard HEAD^
+如果对于刚刚提交的mv和rm不满意，需要退回操作^代表退一个版本，两个代表退两个
+git reset --hard 直接添加git log中相应的版本提交代码前七位，去往哪一次commit之后
+--------------------------------------------------------------------------------
+git reflog-----查询所有的操作记录，可以根据给出的提交码，可以跳转到任意一个位置
+--------------------------------------------------------------------------------
+标签
+在项目重要的commit位置添加快照，保存当时的工作状态，一般用于版本的迭代
+git tag [tag_name] [commit_id(若不写，则默认最新的id)] -m [message(建议填写说明)]
+git show [标签名] 显示标签的详细信息
+git log --pretty=oneline--复制相应的前七位commit_id然后
+git tag v0.9 xxxxxxx -m [版本0.9]就可以在任意位置打标签
+git tag---查看所有标签
+如果想跳到v0.9：git reset -hard v0.9
+git tag -d v0.9 删除标签
+
+==========================临时工作区=================================================
+封存工作区，可以作为一个分支，标志是‘数据结构’
+git stash save '数据结构'
+Saved working directory and index state On master: 数据结构、
+
+git stash list  -----查看所有的stash工作区
+stash@{0}: On master: test2
+stash@{1}: On master: test1
+stash@{2}: On master: 数据结构
+
+git stash apply stash@{2} --------应用选中的stash，完成后需要add * 和 commit 加说明
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   auto_dictionary/dictionary_solution.txt
+git stash drop stash@{0} --------------删除stash区域
+git stash clear --------清空所有stash
+
+==================================分支管理======================================================
+分支管理
+分支即每个人在原有代码（分支）的基础之上建立自己的工作环境，单独开发，互补干扰。完成开发工作后再进行分支统一合并
+git branch -a  -----查看所有分支
+git branch  ----查看分支，*表示当前正在哪个分支工作
+* master
+git branch LWZ  ------创建分支
+git checkout LWZ ----------切换工作分支
+git checkout -b Lwz_1 -------创建并切换到该分支
+一个分支的修改，其他分支是不得而知的，各个独立的
+git merge Lwz_1 ----将分支Lwz_1合并到当前所在的工作分区
+
+git merge LWZ -----------当第二个分支在第一个分支提交之后，想合并的时候会提出警告
+hint: Waiting for your editor to close the file... error: cannot spawn pycharm: No such file or directory
+error: unable to start editor 'pycharm'
+Not committing merge; use 'git commit' to complete the merge.
+
+如果前一个分支和后一个分支修改了同一个文件，则无法完成自动同步，会突出修改部分，需要手动修正结果，就是手动删除
+尽量避免多人修改同一个文件，会导致不必要的冲突，最佳状态是一个人负责一个分支，不会导致不必要的冲突
+git branch -d Lwz_1 -----删除一个分支，前提是已经合并到master，如果没有合并，想强删，就必须使用-D
+
+==================================以上均是本地工作区、暂存区、仓库的操作===========================
+
+==================================以下是远程仓库的操作==========================================
+远程主机上的git仓库。实际上git是分布式结构，每台主机的git仓库结构类似，只是把别人主机上的git仓库成为远程仓库。
+GitHub是一个开源的项目社区网站，拥有全球最多的开源项目。开发者可以注册网站在github建立自己的项目仓库
+如何下载github上的开源代码
+git clone https://github.com/xxxx/xxx.git
+注意，获取到本地的项目会自动和github远程仓库建立连接。且获取的项目本身也是个git项目 
+git remote add origin https://github.com/liwenzhao221/notebook_Python.git --远程仓库的连接
+填写相应的项目信息即可
+github仓库相对本地主机就是一个远程仓库，通过remote连接，如果需要输入密码 输入github密码即可。连接后即可使用远程仓库操作命令操作。readme文件会被自动作为项目介绍
+如果是在即的仓库在仓库界面选择settings，在最后可以选择删除仓库
+git remote rm origin ---删掉一个远程主机
+git push -u origin master -----将master分支上传到哪一台远程仓库，第一次上传某一个分支的时候用一次master -u，表示本地master分支和远程master建立起对应关联，以后对这个远程主机就直接git push即可
+本地仓库修改完成以后直接git push
+git push origin [tag]  --------推送本地标签到远程
+git push origin --tags  -------- 推送本地所有标签到远程
+git push origin --delete tag [tagname] --------删除远程仓库标签
+：git push --force origin0 ----------- 用户本地版本比远程版本旧时强行推送本地版本
+
+上传本地仓库的分支：git push -u origin LWZ-------重复master上传的过程
+这样就有两个远程仓库分别对接了
+如果想删除某一个远程分支：git push origin :/delete LWZ 即可
+删除远程仓库的标签：git push origin --delete tag v1.0 即可
+如果我本地有一个版本写错了，退回了上一个版本的话：git push --force origin0--强推
+如果远程修改了，本地如果获取：git pull [origin] --拉取
+git fetch origin master:tmp ------将远程分支master拉取到本地，作为tmp分支
+远程仓库如何删除
+点击仓库，选择右边settings，拉倒最下面delete this repository
+
+
+
+
+
+
+
+

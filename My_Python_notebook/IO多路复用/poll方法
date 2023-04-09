@@ -1,0 +1,98 @@
+poll方法
+将整数转换为二进制，按二进制位进行运算
+
+& 按位与  一0则0
+| 按位或  一1则1
+^ 按位异或 相同为0，不同为1
+<< 左移
+>> 右移
+
+select.常量名   可以看到对应的描述符
+与用来判定属性是否存在
+或用来增加属性
+
+poll方法
+p.register(fd,event)
+功能：注册关注的IO事件
+参数：fd  要关注的IO
+      event  要关注的IO事件类型
+             常用类型：POLLIN  读IO事件（rlist）
+                      POLLOUT 写IO事件（wlist）
+                      POLLERR 异常IO（xlist）
+                      POLLUP  断开连接
+
+                      e.g. p.register(sockfd,POLLIN|POLLERR)
+
+p.unregister(fd)
+功能：取消对IO的关注
+参数：IO对象或者IO对象的fileno
+
+
+events = p.poll()
+功能：阻塞等待监控的IO事件发生
+返回值：返回发生的IO
+		events格式[(fileno,event),()....]
+		每个元组为一个就绪IO，元组第一项是该IO的fileno，第二项是该IO的事件类型
+
+
+
+'''
+poll_server.py 完成tcp并发服务
+重点代码
+思路分析：
+		IO多路复用实现并发
+		建立fileno--》io对象字典用于IO查找
+'''
+1.创建套接字
+2.将套接字register
+3.创建查找字典，并维护
+4.循环监控IO发生
+5.处理发生的IO
+
+
+from socket import *
+from select import select
+
+# 创建监听套接字，作为关注的IO
+s = socket()
+s.setsocket(SOL_SOCKET,SO_REUSEADDR,1)
+s.bind(('0.0.0.0',8888))
+s.listen(3)
+
+# 创建poll对象
+p = poll()
+
+# 建立查找字典，通过一个IO的fileno找到IO对象,该字典的维护需要始终与register的IO保持一致
+fdmap = {s.fileno():s}
+
+# 关注s
+p.register(s,POLLIN|POLLERR)
+
+# 循环监控IO发生
+while True:
+	events = p.poll()
+	#print(events)----->[(3,1)]
+	# 循环遍历列表，查看哪个IO就绪，进行处理
+	for fd,event in events:
+		#print('fileno:',fd)
+		#print('event:',event)
+		# 这里需要用到字典，通过fd的值找到s 
+		#区分哪个IO就绪
+		if fd == s.fileno()
+			c,addr = fdmap[fd].accept()
+			print('Connect from',addr)
+			# 关注客户端连接套接字
+			p.register(c,POLLIN|POLLERR)
+			# 维护字典
+			fdmap[c.fileno()] = c
+		elif event & POLLIN:# 判断是否为POLLIN就绪
+			data = fdmap[fd].recv(1024).decode()
+			if not data:
+				p.unregister(fd) # 文件描述符或者文件独享都行
+				fdmap[fd].close()
+				del fdmap[fd]# 维护字典
+				continue
+
+			print(data)
+			fdmap[fd].send(b'OK')
+

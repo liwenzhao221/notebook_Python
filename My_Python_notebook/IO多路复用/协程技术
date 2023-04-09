@@ -1,0 +1,135 @@
+协程技术、复习计划
+线程，微线程。是允许在不同入口点不同位置暂停或开始的计算机程序，简单来说，协程就是可以暂停制定的函数
+原理：记录一个函数的上下文，协程调度切换时会将记录的上下文保存，在切换回来时进行调取，恢复原有的执行内容，以便从上次位置继续执行
+
+
+复习计划：
+	1.重点代码看会，熟练写出
+	2.做一个复习计划，3周
+		函数编程
+		面向对象
+		闭包和装饰器
+		数据结构算法
+		进城线程网络
+
+
+
+协程：在应用层通过函数的暂停跳转实现多个任务间切换执行。其中每个函数都可以从任意位置暂停跳出，并重新调用后执行（生成器--yield）
+
+*本质是单线程，无法使用cpu多核资源
+*开销少
+
+第三方协程模块
+greenlet模块
+
+async def fun():
+	print('start')
+	#设置跳转阻塞点
+	await asyncio.sleep(2)
+	print('end')
+
+async def fun2():
+	print('start2')
+	await asyncio.sleep(3)
+	print('end2')
+
+cor1 = fun()
+cor2 = fun2()
+
+tasks = [asyncio.ensure_future(cor1),asyncio.ensure_future(cor2)]
+loop = asyncio.get_event_loop()
+loop.run_until_complete(asyncio.wait(tasks))
+
+
+sudo pip3 install greenlet
+
+
+def fun1():
+	print('执行fun1')
+	gr2.switch()
+	print('结束fun1')
+	gr2.switch()
+
+def fun2():
+	print('执行fun2')
+	gr1.switch()
+	print('结束fun2')
+
+# 将函数变为协程
+gr1 = greenlet(fun1)
+gr2 = greenlet(fun2)
+
+gr1.switch()
+
+
+gevent模块
+sudo pip3 install gevent
+
+
+gevent 协程模块  实例
+
+def foo(a,b):
+	print('Running foo...',a,b)
+	# 如果想跳转
+	gevent.sleep(2)
+	print('Foo again...')
+
+def bar():
+	print('Running bar...')
+	print('Bar again..')
+
+
+# 生成协程对象
+f = gevent.spawn(foo,1,2)
+
+gevent.sleep(3) # 具备协程阻塞的才可以启动协程
+#gevent.joinall()
+
+f = gevent.spawn(foo,1,2)
+b = gevent.spawn(bar)
+
+gevent.joinall([f,b])# 阻塞等待f，b两个协程执行完毕
+
+monkey脚本
+作用：在gevent协程中，协程只有遇到gevent指定类型的阻塞才能跳转到其他协程，因此，我们希望将普通的IO阻塞行为转换为可以出发gevent协程跳转的阻塞，以提高执行系哦啊率
+转换方法：gevent提供了一个脚本程序monkey，可以修改底层解释IO阻塞的行为，将很多普通阻塞转换为gevent阻塞。
+
+使用方法：
+from gevent import monkey
+monkey.patch_sokcet()# 转换socket中所有阻塞
+mokey.patch_all()# 将所有可转换的IO阻塞全部转换则运行all
+注意：脚本运行函数需要在对应模块导入前执行
+
+
+'''
+gevent server 基于协程的TCP并发
+
+思路：
+	1.将每个客户端的处理设置为协程函数
+	2.让socket（）模块下的阻塞可以触发协程跳转
+'''
+import gevent
+from gevent import mokey
+monkey.patch_all() # 执行脚本，修改socket阻塞
+from socket import *
+
+def handle(c):
+	while True:
+		data = c.recv(1024).decode()
+		if not data:
+			break
+		print(data)
+		c.send(b'OK')
+
+#创建tcp套接字
+s = socket()
+s.setsockopt(SOL_SOCKET,SO_REUSEADDR,1)
+s.bind(('0.0.0.0',8888))
+
+# 循环接受客户端链接
+while True:
+	c,addr = s.accept()
+	print('Connect from ',addr)
+	# handle(c)# 处理具体的客户端请求
+	gevent.spawn(handle,c)
+

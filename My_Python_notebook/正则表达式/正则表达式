@@ -1,0 +1,96 @@
+正则表达式
+s = '老齐: qtx@tedu.cn'
+
+import re
+
+re.findall()
+re.findall('\w+@\w+\.cn',s)
+
+re.findall('a','asdfasdf')
+re.findall('ab','adsfadf')# ab表示必须紧挨着
+re.findall('你好','你好asdfasdfasd')
+
+元字符：|
+	匹配两侧任意的正则表达式即可
+	re.findall('http|https','http://www.baidu.com')
+
+元字符：.
+	匹配除换行外的任意一个字符
+	re.findall('张.丰','张三丰，张思丰，张武峰')
+
+元字符：[字符集]
+	匹配字符集中的任意一个字符
+	[abc#!好]
+	re.findall('[aeiou]','hello world')
+	[0-9],[a-z][A-Z]表示区间内的任意一个字符
+	[_#0-9a-z]字符和数字字母匹配到一起
+
+元字符：[^字符集]
+	匹配除了字符集意外的任意一个字符
+	re.findall('[^_#0-9a-z]','Port-18')
+
+元字符：^
+	匹配目标字符串的开头位置
+	re.findall('^Jame','Jame,hello')
+	表示必须以匹配字符开头才可以
+
+元字符：$
+	匹配目标字符串的结尾位置
+	re.findall('Jame$','Jame,hello,Jame')
+
+	[^$]同时出现，表示完全匹配目标字符串/绝对匹配
+
+元字符：*
+	匹配前面的字符出现0次或多次
+	re.findall('wo*','wooooooo~~w!')
+	匹配'o'出现多次的字符集和出现0次的字符集
+	wo加上小括号（）代表wo是一个整体，匹配需要匹配整体
+	[]中括号代表字符集，与不加效果一样
+
+re.findall('[a-zA-Z]*','How are you')
+
+re.findall('^[A-Z][a-z]*','How are you') # *匹配到空格就会停止匹配
+
+元字符：+
+	匹配前面的字符出现1次或多次
+	re.findall('[A-Z][a-z]+','How are you ? Fine Jame')
+
+元字符：？
+	匹配前面的字符出现0次或1次
+	re.findall('ab?','abbbababaaabbbbabababababa')
+	re.findall('-?[0-9]+','168 -28 29 -8')
+	r = re.findall('[^ ]+','Port-9 Error #404# %@STD')
+
+元字符：{n}
+	匹配前面的字符出现n次 
+	r = re.findall('Er{2}','Port-9 Error #404# %@STD') 
+	r = re.findall('1[0-9]{10}','张三：13801920348')
+
+元字符：{m,n}
+	匹配前面的字符出现m-n次
+	re.findall('[1-9][0-9]{5-10}','123525734567')
+
+贪婪模式和非贪婪模式
+re.findall(r'ab*','abbbbbbbbbbbbbbbbcd')
+
+贪婪模式
+默认情况下，匹配重复的元字符总是尽可能多的向后匹配内容
+
+非贪婪模式
+让匹配重复的元字符尽可能少的向后匹配内容。
+在匹配符后面加上问号，就会优先选取最少符合条件的匹配符
+
+s = '[花千骨],[陆贞传奇],[新还珠格格],[楚乔传]'
+re.findall(r'\[\w+\]',s)
+re.findall(r'\[\.+\]',s)
+re.findall(r'\[\.+?\]',s)--非贪婪模式
+
+匹配一个.com邮箱格式字符串
+匹配一个密码8-12位数字字母下划线构成
+匹配一个数字 正数，负数，整数，小数，分数1/2，百分数45%
+匹配一段文字中以大写字母开头的单词，注意文字中可能有iPython（不算） H-base（算） 单词可能还有大写字母小写字母 - _
+
+\w+@\w+\.com
+\w{8-12}
+-?\d+/?\.?\d*%?
+\b[A-Z][- _a-zA-Z]*

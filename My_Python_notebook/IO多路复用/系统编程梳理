@@ -1,0 +1,23 @@
+系统编程梳理
+系统编程：
+	1.Linux操作系统 shell命令   文件系统结构
+	2.IO网络编程
+		文件IO：open() read() write() close() flush() seek()
+		网络IO：
+			理论基础：OSI模型 三次握手和四次挥手 http协议 传输层协议
+			tcp通信：socket（） bind（）listen（）accept（）recv（）send（）connect（）
+			udp通信：socket（）bind（）recvfrom（）sendto（）
+	3.并发编程
+		进程：
+			进程理论：什么是进程、进程的状态、僵尸进程
+			fork进程：os.fork()基于fork网络并发
+			process进程：Process（） start（）join（）、进程池的使用Pool、进程间通信（管道、消息队列、共享内存、信号量）
+		线程：
+			线程创建：Thread（）start（）join（）、基于线程网络并发
+			同步互斥：Event（）Lock（）、死锁
+			GIL：
+		IO模型：
+			阻塞：默认形态，效率低下
+			非阻塞IO：block timeout
+			IO多路复用：select（）poll（）epoll（）
+			协程：什么是协程，gevent

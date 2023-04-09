@@ -1,0 +1,51 @@
+epoll方法
+
+
+from socket import *
+from select import select
+
+# 创建监听套接字，作为关注的IO
+s = socket()
+s.setsocket(SOL_SOCKET,SO_REUSEADDR,1)
+s.bind(('0.0.0.0',8888))
+s.listen(3)
+
+# 创建epoll对象
+ep = epoll()
+
+# 建立查找字典，通过一个IO的fileno找到IO对象,该字典的维护需要始终与register的IO保持一致
+fdmap = {s.fileno():s}
+
+# 关注s
+ep.register(s,EPOLLIN|EPOLLERR)
+
+# 循环监控IO发生
+while True:
+	events = ep.poll()
+	#print(events)----->[(3,1)]
+	# 循环遍历列表，查看哪个IO就绪，进行处理
+	for fd,event in events:
+		#print('fileno:',fd)
+		#print('event:',event)
+		# 这里需要用到字典，通过fd的值找到s 
+		#区分哪个IO就绪
+		if fd == s.fileno()
+			c,addr = fdmap[fd].accept()
+			print('Connect from',addr)
+			# 关注客户端连接套接字
+			p.register(c,EPOLLIN|EPOLLERR)
+			# 维护字典
+			fdmap[c.fileno()] = c
+		elif event & EPOLLIN:# 判断是否为POLLIN就绪
+			data = fdmap[fd].recv(1024).decode()
+			if not data:
+				p.unregister(fd) # 文件描述符或者文件独享都行
+				fdmap[fd].close()
+				del fdmap[fd]# 维护字典
+				continue
+
+			print(data)
+			fdmap[fd].send(b'OK')
+
+EPOLLET--边缘出发--有IO就绪但是没处理的话，会提醒一下，下次再有IO就绪，会一起再次送过来
+还有一个水平触发--有IO就绪但是没处理的话，会一直提醒处理
