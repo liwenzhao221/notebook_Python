@@ -1,0 +1,96 @@
+Python re模块
+compile
+regex = compile(pattern,flags = 0)
+产生正则表达式对象
+
+
+regex.py re模块 功能函数演示
+
+import re
+
+# 目标字符串
+s = "Alex:1994,Sunny:1996"
+pattern = r'\w+:\d+' # 正则表达式
+
+# re 模块调用findall（）
+l = re.findall(pattern,s)
+
+# compile 对象调用findall
+regex = re.compile(pattern)
+l = regex.finadll(s)
+'''
+regex.findall()
+参数:
+	string目标字符串
+	pos截取目标字符串的开始匹配位置
+	endpos截取目标字符串的结束匹配位置
+'''
+
+# 按照正则表达式匹配内容切割字符串
+l = re.split(r'[:]',s)
+
+re.sub(pattern,replace,string,max,flags = 0)
+使用一个字符串替换正则表达式匹配到的内容
+参数：
+	pattern 正则表达式
+	replace 替换的字符串
+	string 目标字符串
+	max 最多替换几处，默认全部替换
+	flags 功能标志位，扩展正则表达式的匹配
+返回值：替换后的字符串
+
+
+'''
+regex re模块 功能函数演示2
+生成match对象的函数
+'''
+
+import re
+s = '几年是2019年，见过70周年'
+pattern = r'\d+'
+
+# 返回迭代对象
+it = re.finditer(pattern,s)
+for i in it:
+	print(i.group()) # 获取match对象对应内容
+
+re.fullmatch(pattern,string,flags = 0)
+功能：完全匹配某个目标字符串
+
+# 匹配开始位置
+re.match(r'\d+',s)
+
+# 匹配目标字符串第一个符合内容--只匹配一出
+re.search(pattern,string,flags = 0)
+m = re.search(r'\d+',s)
+print(m.group())
+
+pattern = r'(ab)cd(?P<pig>ef)'
+regex = re.compile(pattern)
+obj = regex.search('abcdefghi',0,8) # match对象
+
+# 属性变量
+print(obj.pos) # 目标字符串开始位置
+print(obj,endpos) # 目标字符串结束位置
+print(obj.re) # 正则
+print(obj.string) # 目标字符串
+print(obj.lastgroup) # 最后一组组名
+pring(obj.lastindes) # 最后一组序列号
+
+# 属性方法
+print(obj.span())# 匹配内容在字符串中位置
+print(obj.start())
+print(obj.end())
+print(obj.groupdict())# 捕获组字典
+print(obj.groups()) # 子组对应内容元组
+pring(obj.group()) # 获取match对应内容
+pring(obj.group(1))
+
+regex = re.compil(r'\w+',flags = re.A)
+'''
+A == ASCII
+I == IGNORECASE 匹配忽略字母大小写
+S == DOTALL 使.可以匹配换行
+M == MULTILINE 使^$ 可以匹配每一行的开头结尾位
+X == VERBOSE 为正则添加注释
+'''

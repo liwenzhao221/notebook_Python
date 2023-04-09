@@ -1,0 +1,39 @@
+Python-MySQL基本操作
+import pymysql
+
+db = pymysql.connect(host='localhost',port=3306,user='root',password='li1994221',database='student',charset='utf8')
+
+cur = db.cursor()
+
+#写操作
+# try:
+#     # 写sql语句执行
+#     # 插入操作
+#     name = input('Name:')
+#     age = input('Age:')
+#     score = input('Score:')
+#     sql = 'insert into stu_info (name,age,score) values ("%s","%s","%s")'%(name,age,score)
+#     # 可以使用列表直接给sql语句的values传值
+#     # cur.execute(sql,[name,age,score]) # 执行
+#     sql = 'insert into stu_info (name,age,score) values (%s,%s,%s)'
+#     cur.execute(sql,[name,age,score])
+#     cur.execute(sql)
+#     db.commit()
+#
+# except Exception as e:
+#     db.rollback() # 退回到commit执行之前的状态
+#     print(e)
+
+try:
+    # 修改操作
+    # sql = 'update stu_info set age=29 where name = "lzy"'
+    # cur.execute(sql)
+
+    # 删除操作
+    sql = 'delete from stu_info where id = 1'
+    cur.execute()
+
+    db.commit()
+except Exception as e:
+    db.rollback()
+    print(e)
