@@ -1,0 +1,24 @@
+在python中有一个类
+import getpass # 隐藏输入
+import hashlib # 转换加密
+
+# 输入隐藏
+pwd = getpass.getpass('PW:')
+必须在cmd的项目目录下运行，pycharm运行无效
+print(pwd)
+
+
+# 算法加盐 ---用户输入的密码可能很简单，但后端数据库有一个复杂的密码-盐，将用户的密码与盐拼接在一起进行加密处理
+# 几遍逆推出来，如果不知道盐是什么，也无法使用密码登录，所以盐是绝密
+# 但是无法保证用户输入的时候是否在传输过程中被截获
+
+
+# hash对象
+# 算法加盐
+# 可以根据用户的名字添加到对应的盐中，这样更具迷惑性
+hash = hashlib.md5("*#06l_".encode()) # 生成对象
+hash.update(pwd.encode()) # 算法加密
+pwd = hash.hexdigest() # 提取加密后的密码
+print(pwd)
+
+登录的时候，使用同样的方法进行转换，然后与数据库中的加密密码进行比对

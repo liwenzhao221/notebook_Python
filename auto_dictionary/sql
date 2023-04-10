@@ -1,0 +1,21 @@
+用户表：
+mysql> create table user(
+    -> id int primary key auto_increment,
+    -> name varchar(32) not null,
+    -> passwd char(128)
+    -> );
+
+历史记录表：
+mysql> create table hist(
+    -> id int primary key auto_increment,
+    -> name varchar(32) not null,
+    -> word varchar(28) not null,
+    -> time datetime default now()
+    -> );
+
+单词表：
+mysql> create table words(
+        id int primary key auto_increment,
+        word char(32) not null,
+        mean text not null
+        );
