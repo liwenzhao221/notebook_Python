@@ -22,3 +22,20 @@ pwd = hash.hexdigest() # 提取加密后的密码
 print(pwd)
 
 登录的时候，使用同样的方法进行转换，然后与数据库中的加密密码进行比对
+
+===================================================================
+cookie
+    import hashlib
+
+    生成加密对象
+    hash = hashlib.md5() # 用哪个加密算法，就生成那个加密对象
+    hash = hashlib.md5('$%^678GYUhjk'.encode()) # 加盐处理
+
+    对密码进行加密（passwd是你要加密的密码）
+    hash.update(passwd.encode())
+
+    加密后的密码(返回加密后的字串）
+    ps = hash.hexdigest()
+
+chardet模块可以查看编码类型
+result = request.decode(encoding='%s' % chardet.detect(request)['encoding'])
