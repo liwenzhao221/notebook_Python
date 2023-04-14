@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--兼容移动端-->
+    <meta name="viewport" content="width=device=width,initial-scale=1.0">
+    <title>Title</title>
+<!--添加一个新的元素，用于描述body中元素的内容
+通过#查找相应的id值,加上{}内部写样式
+-->
+    <link rel="stylesheet" href="css/index.css" type="text/css">
+<!--    <style>-->
+<!--        #div2{-->
+<!--            color:red;-->
+<!--        }-->
+<!--        *{-->
+<!--            margin:0;-->
+<!--            padding:0;-->
+<!--        }-->
+<!--    </style>-->
+    <style>
+        .blue{
+            color:blue;
+        }
+    </style>
+    <style>
+        .box{
+            width:260px;
+            background-color:blue;
+            color:#fff;
+            text-align:center;
+        }
+        .box:hover{
+            background-color:green;
+        }
+<!--通过input标签的id属性找到对应的位置-->
+        #name:focus{
+            background-color:red;
+        }
+        .a1:link{
+            color:green;
+        }
+        .a1:visited{
+            color:orange;
+        }
+        .a1:hover{
+            color:blue;
+        }
+        .a1:active{
+            color:red
+        }
+    </style>
+    <style>
+        #div1{
+            width:100px;
+            background-color:red;
+            height:50px;
+        }
+        #div2{
+            width:20em;
+            background-color:blue;
+            height:10px;
+        }
+    </style>
+    <style>
+        .p2{
+            background-color: pink;
+            color: black;
+            width: 100px;
+            height: 100px;
+            overflow:scroll;
+        }
+    </style>
+</head>
+<body>
+<!--    <p id="p1" style="text-align:center">今天天气真热</p>-->
+<!--    <p id="p2">明天可能会下雨</p>-->
+<!--    <div id="div1">-->
+<!--        明天可能会下雨-->
+<!--        <div>我是子类元素</div>-->
+<!--    </div>-->
+<!--    <div id="div2" style="color:blue;">我是一个测试的内容</div>-->
+
+    <div class="blue">今天</div>
+    <p class="blue">明天</p>
+    <h3 class="blue">后天</h3>
+<!--有一个div元素，默认一个背景色，移动上后编程另外一个背景色-->
+    <div class="box">
+        我会变颜色
+    </div>
+    <div>
+        <form action="#" class="name">
+            <label for="name">姓名：</label>
+            <input type="text" id="name" name="name">
+        </form>
+    </div>
+    <a href="www.baidu.com" class="a1">百度</a>
+    <div id="div1"></div>
+    <div id="div2"></div>
+    <p class="p2">
+        一个优秀的程序员，必须掌握多项技能
+    </p>
+    <p>
+        一个优秀的程序员，必须掌握多项技能一个优秀的程序员，必须掌握多项技能一个优秀的程序员，必须掌握多项技能一个优秀的程序员，必须掌握多项技能
+    </p>
+</body>
+</html>
+<!--
+选择器分类：
+1.标签选择器--根据标签名匹配文档中所有元素--但是会匹配所有对应标签---效率极低--标签名
+2.id选择器--根据元素id属性值匹配文档中唯一的元素，id具有唯一性，不能重复使用--#/*
+    id属性自定义可以由数字，字母，下划线，-组成，不能以数字开头--.
+3.class选择器/类选择器--根据元素的class属性值匹配相应的元素，class属性值可以重复使用，实现样式的复用
+    特殊用法：
+        1.类别选择器与其他选择器结合使用
+            注意标签与类选择器结合时，标签在前，类选择器在后
+                例：a.c1{}
+        2.class属性值可以写多个，共同应用类选择器的样式
+            例：.c1{}
+               .c2{}
+4.群组选择器--为一组元素统一设置样式
+5.后代选择器--匹配满足选择器的所有后代元素（包括直接子元素和间接子元素）
+6.子代选择器--匹配满足选择器的所有直接子元素
+7.伪类选择器--为元素的不同状态分别设置样式，必须与基础选择器结合使用
+    分类：
+        :link--超链接访问前的状态
+        :visited--超链接访问后的状态
+        :hover--鼠标滑过时的状态
+        :active--鼠标点按不太起时的状态（激活）
+        :focus--焦点状态（文本框被编辑时就称为获取焦点）
+选择器的优先级：
+    标签选择器---------1
+    （伪）类选择器------10
+    id选择器-----------100
+    行内样式-----------1000
+元素的尺寸和颜色
+    1.元素的尺寸
+        1.px像素单位
+        2.百分比%相对父元素
+        3.相对单位em，相对父元素--1em=16px，常用1.5em
+        4.rpx小程序页面的单位
+        5.当页面元素的内容大小超出了元素宽度，可以使用overflow属性来解决超出部分的显示方式
+    2.颜色
+        1.元素的字体，背景，边框
+        2.使用方式color:red;
+            1.英文单词
+            2.16进制
+                1.长16进制 #ffffff;
+                2.短的16进制 #fff;
+        3.rgb
+            1.rgb（0-255），rgb（2,3,5）
+            2.rgba（0-1），rgb（2,3,5,0.5）
+-->

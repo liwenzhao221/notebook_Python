@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--可以直接div#top  -->
+  <div id="top">页面顶部区域</div>
+  <div id="main">页面主题区域</div>
+  <div id="bottom">页面底部区域
+      <!--可以使用#+div的位置属性进行跳转      -->
+      <a href="#top">
+          <img src="images/Family.jpg" width="100px" height="100px" title="family" alt='路径不正确'>
+      </a>
+
+  </div>
+   <img src="images/Family.jpg" width="100px" height="100px" title="family" alt='路径不正确'>
+   <a href="路径" target="设置目标文件的打开方式，默认在当前窗口打开，可以设置在新建窗口打开目标文件">这里设置点击的内容</a>
+   <a href="路径" target="_blank">这里设置点击的内容</a>
+<div>
+<!-- 无序列表   -->
+    <ul>
+        <li>list item 列表项 1</li>
+        <li>list item 列表项 2</li>
+        <li>list item 列表项 3</li>
+    </ul>
+    <!-- ul>li*2   -->
+    <ul>
+        <li></li>
+        <li></li>
+    </ul>
+    <!-- 有序列表   -->
+    <ol start="3"
+        type="A"
+    reversed>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ol>
+    <ol>
+        <li></li>
+        <li></li>
+    </ol>
+    <ul>
+        <li>第一章
+            <ul>
+                <li>第一节</li>
+                <li>第二节</li>
+                <li>第三节</li>
+            </ul>
+        </li>
+        <li>第二章
+            <ul>
+                <li>第四节</li>
+                <li>第五节</li>
+                <li>第六节</li>
+            </ul>
+        </li>
+    </ul>
+<!--  表格标签
+         表格由行和单元格组成，常用于直接的数据战士或辅助排版，基本机构如下：-->
+    <table border="1" cellspacing="0"
+<!--   创建行标签     -->
+        <caption>学生信息管理系统</caption>
+        <tr>
+<!--     行中创建单元格以显示数据       -->
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>性别</th>
+            <th>班级</th>
+        </tr>
+        <tr>
+            <td>张三</td>
+            <td>49</td>
+            <td>男</td>
+            <td>非全2班</td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
