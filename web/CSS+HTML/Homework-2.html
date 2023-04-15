@@ -10,8 +10,29 @@
             width: 345px;
         }
         label{
-            width: 100px;
-            border:solid 1px red;
+            /*display:inline-block--将内联元素转成块元素，可以控制宽度和高度 */
+            display: inline-block;
+            width: 88px;
+            border:solid 0px red;
+            text-align: right;
+        }
+        .h{
+            height: 100px;
+        }
+        .btn{
+            width: 180px;
+            background-color: green;
+            color: aliceblue;
+            padding: 13px;
+            outline: none;
+            border: 0px;
+            border-radius: 5px;
+        }
+        div{
+            margin: 20px 0px;
+        }
+        .pad{
+            padding: 8px;
         }
     </style>
 </head>
@@ -20,28 +41,31 @@
         <form action="#">
             <div>
                 <label for="email">邮箱地址</label>
-                <input type="text" name="email" id="email">
+                <input type="text" name="email" id="email" class="pad">
             </div>
             <div>
                 <label for="pwd">设置密码</label>
-                <input type="password" name="password" id="pwd">
+                <input type="password" name="password" id="pwd" class="pad">
             </div>
             <div>
-                <label for="inst">新区标签</label>
-                <input type="checkbox">新闻
-                <input type="checkbox">文化
-                <input type="checkbox">体育
-                <input type="checkbox">娱乐
-                <input type="checkbox">音乐
-                <input type="checkbox">军事
+                <label for="inst" class="h">兴趣标签</label>
+                <span style="display: inline-block;">
+                    <input type="checkbox">新闻
+                    <input type="checkbox">文化
+                    <input type="checkbox">体育
+                    <input type="checkbox">娱乐
+                    <br/>
+                    <input type="checkbox">音乐
+                    <input type="checkbox">军事
+                </span>
             </div>
             <div>
                 <label for="code">验证码</label>
-                <input type="text" id="code">
+                <input type="text" id="code" class="pad" style="width: 80px;">
             </div>
             <div>
                 <label for=""></label>
-                <input type="submit" value="立即注册">
+                <input type="submit" value="立即注册" class="btn">
 
             </div>
             <div>
