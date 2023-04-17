@@ -1,0 +1,36 @@
+练习:
+1. 创建数据库 books 使用utf8编码
+create database books charset=utf8;
+
+2. 创建表   文学类(letter)  字段如下
+id  book author  price  publication  comment
+
+create table letter (id int primary key auto_increment,book varchar(64) not null,author varchar(32) default "佚名",price float,publication varchar(128) not null,comment text);
+
+3. 插入若干数据(5-8)
+   price: 30 --- 70
+   出版社 : 中国教育出版社
+           机械工业出版社
+           中国文学出版社
+
+4. 查找练习
+   查找出所有价格高于50的图书
+   select * from letter where price > 50;
+   查找出版社为 中国教育 或者中国文学的 图书
+   select * from letter where publication in (' 中国教育出版社','中国文学出版社');
+
+   查找 作者为鲁迅 同时是 中国教育出版社出版的图书
+   select * from letter where author = '鲁迅' and publication='中国教育出版社';
+
+   查找备注不为空的记录
+   select * from letter where comment is not null;
+
+   查找价格在35 -- 50 之间图书
+    select * from letter where price between 35 and 50;
+
+   查找价格高于60或者小于40的图书,只查询书名和价格
+   select book,price from letter where price<40 or price > 60;
+
+作业: 1. 练习没做完完成
+     2. 熟悉语句和数据类型
+

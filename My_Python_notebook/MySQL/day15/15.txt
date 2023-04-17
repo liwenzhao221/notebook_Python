@@ -1,0 +1,116 @@
+前情回顾
+
+1. 什么是数据库
+
+   在介质中存储数据的一个区域
+
+2. 基本概念
+
+   * 分类 :  关系型&非关系型
+             开源 & 非开源
+             大型 & 中型 & 小型
+
+   * 关系型数据库组织结构:
+     数据元素 --> 记录 -->数据表--> 数据库
+
+     数据库 : database
+     数据表 : table
+     字段  : column
+     记录 :  row
+     主键 : primary key
+
+3. mysql : 关系型  开源
+
+4. SQL
+
+   * 数据库操作
+     show databases;
+     create database [db_name];
+     select database();
+     use [db];
+     show create database [db];
+     drop database [db];
+
+   * 数据表
+
+     show tables;
+     create table [tb_name] (column type,...);
+
+     约束类型:  primary key  auto_increment
+              unsigned
+              not null
+              default ...
+
+     数据类型: 数字  int  float bit
+              字符串 char varchar  blob  text enum set
+              时间日期
+
+     desc [tb];
+     show create table [tb];
+     drop table [tb];
+
+   * 增
+   insert into table [column,...] values [val,..]
+
+   * 查
+   select [column,..] from [tb] where ..
+
+    where子句 :  算数运算
+                比较运算
+                逻辑运算
+                位运算
+
+cookie
+   time('2:30:00')  得到指定的时间
+   date('2019-11-11') 得到指定日期
+
+   * 主要用于时间运算
+
+   select * from marathon where performance<(time('2:30:00') + interval 10 minute);
+
+练习 :  使用books数据库 letter表
+
+1. 在表中增加字段出版日期 publication_date 增加在出版社字段后
+ alter table letter add publication_date date after publication;
+
+2. 修改各个图书的出版时间,时间自己拟定
+update letter set publication_date='2012-12-3' where book='围城';
+
+3. 查找2000年之前出版的图书
+select * from letter where publication_date<'2000';
+
+4. 找出价格最贵的一本图书
+select * from letter order by price desc limit 1;
+
+练习 :   创建一个数据库 dict
+        创建一个表 words
+        将单词本中的单词插入表中
+        id     word     mean
+
+二进制文件存储到数据库
+
+1. 存储文件的所在路径 "/home/tarena/..."
+
+2. 存储文件本身
+
+
+练习: 模拟登录注册行为
+
+     * 注册: 将注册信息存储到数据库,用户名不能重复
+            基础信息包含用户名,密码
+
+     * 登录: 判断用户名密码是否正确
+
+作业:  1. login 自己写一下
+      2. 数据库整理
+      3. github.com 注册一个账号
+
+
+
+
+
+
+
+
+
+

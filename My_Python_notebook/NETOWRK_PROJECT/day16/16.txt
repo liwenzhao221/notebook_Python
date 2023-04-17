@@ -1,0 +1,9 @@
+吕泽 :  lvze_work@126.com
+
+ssh连接github
+
+1. ssh-keygen 生成秘钥对
+2. ~/.ssh 中找到公钥,复制内容
+3. 将内容粘贴到github中的 settings->ssh and GPG keys->new keys 中
+
+作业: 复习第二阶段之前的聊天室,文件服务器
