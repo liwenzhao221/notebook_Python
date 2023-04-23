@@ -11,7 +11,7 @@ while True:
     print("Listen port 8080..")
     try:
         connfd,addr = s.accept()
-        print('Connect from %d'%addr)
+        print('Connect from',addr)
     except KeyboardInterrupt:
         print('Server is exit')
         break
