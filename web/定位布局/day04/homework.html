@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 使用内嵌的方式添加页面样式 -->
+    <style>
+       #cart{
+           width: 140px;
+           height: 34px;
+           line-height: 34px;
+           text-align: center;
+           border:solid 1px #ccc;
+           background-color:#eee;
+           margin: 50px auto;
+           position: relative;
+       }
+       #cart .dot{
+           position: absolute;
+           top:-9px;
+           right:23px;
+           width: 20px;
+           height: 20px;
+           text-align: center;
+           line-height: 20px;
+           background-color:#c91a26;
+           color:#fff;
+           border-radius: 10px 10px 10px 0;
+       }
+    </style>
+</head>
+<body>
+    <!-- 1. 添加面页元素
+         2. 为元素添加样式
+         3. 调优代码 -->
+    <div id="cart">
+        我的购物车 &nbsp;&nbsp;&nbsp;&gt;
+        <span class="dot">1</span>
+    </div>
+</body>
+</html>
