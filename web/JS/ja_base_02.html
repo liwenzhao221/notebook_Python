@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="tip">...</div>
+    <script>
+        // //定义一个带名称参数的函数
+        // function hi(name){
+        //     return name+',hello!'
+        // }
+        // //获取制定id号元素对象并保存在变量中
+        // var objTip=document.getElementById('tip');
+        // //设置元素对象中的内容
+        // objTip.innerText=hi('xxx');
+    </script>
+    <script>
+        //定义一个带参数的匿名函数
+        (function(name,age){
+            var str=name+',hello,今年'+age;
+            objTip=document.getElementById('tip')
+            objTip.innerText=str
+        })('xxx','34')
+    </script>
+</body>
+</html>
