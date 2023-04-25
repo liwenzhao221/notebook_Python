@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+       figure{
+           margin: 0;
+           padding: 0;
+       }
+       #pics{
+           position: relative;
+       }
+       #pics figure{
+           position: absolute;
+       }
+       #pics figure:nth-child(2){
+           left:15px;
+           top:15px;
+           z-index: 999;
+       }
+       #pics figure:nth-child(3){
+           left:30px;
+           top:30px;
+       }
+       #pics figure:nth-child(4){
+           left:45px;
+           top:45px;
+       }
+       #pics figure:hover{
+           z-index: 2;
+       }
+    </style>
+</head>
+
+<body>
+    <div id="pics">
+        <figure>
+            <img src="../imgs/img01-8.jpg" alt="">
+        </figure>
+        <figure>
+            <img src="../imgs/img02-8.jpg" alt="">
+        </figure>
+        <figure>
+            <img src="../imgs/img03-8.jpg" alt="">
+        </figure>
+        <figure>
+            <img src="../imgs/img04-8.jpg" alt="">
+        </figure>
+    </div>
+</body>
+
+</html>

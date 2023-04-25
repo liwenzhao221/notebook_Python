@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #top{
+            /* 默认固定在顶部 */
+            position: fixed;
+            width: 100%;
+            background-color: blue;
+            bottom:0;
+        }
+        #top ul{
+            list-style-type: none;
+            overflow: hidden;
+        }
+        #top ul li{
+            float: left;
+            padding: 3px 8px;
+            color:#fff;
+        }
+        #a1,#a2{
+            width: 100px;
+            height: 200px;
+            border: solid 1px red;
+            position: fixed;
+            top:50%;
+            margin-top:-100px;
+            
+        }
+        #a1{
+            left:0;
+        }
+        #a2{
+            right:0;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        我是有导航的
+    </p>
+    <div id="top">
+        <ul>
+            <li>新闻</li>
+            <li>图片</li>
+            <li>热点</li>
+        </ul>
+    </div>
+    <!-- 增加高度的div -->
+    <div style="height:2000px"></div>
+    <p>
+        我是有底线的
+    </p>
+
+    <div id="a1">
+         我是左侧
+    </div>
+    <div id="a2">
+         我是右侧
+    </div>
+</body>
+</html>

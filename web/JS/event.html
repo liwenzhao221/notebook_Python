@@ -7,14 +7,34 @@
     <title>Document</title>
 </head>
 <body>
+    <script>
+        // //获取制定id的元素
+        // a=1;
+        // A=2;
+        // const PI = 3.1415926;
+        // //只保留两位，并显示在页面
+        // alert(PI.toFixed(2))//toFixed修改保留的位数
+        // a = typeof(a)
+        //设置div显示的值，使用innerText
+        //取文本框里面的值，使用value
+        
+        
+    </script>
     <div id="tip">
 
     </div>
-    <button onclick="a = document.getElementById('tip');a.innerText='hello,world!';">点我一下</button>
+    <div>
+        <input type="text" id="txt">
+    </div>
+    <button onclick="a = document.getElementById('txt');b = document.getElementById('tip');b.innerText=a.value;">点我一下</button>
     <script>
-        //获取制定id的元素
-        
-        
+       var a=2;
+       console.log(++a) 
+       var b=2;
+       console.log(b++)
+       console.log(b)
+       var result=a>b?a:b;
+       console.log(result);
     </script>
 </body>
 </html>

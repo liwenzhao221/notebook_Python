@@ -1,0 +1,48 @@
+1.HTML
+    CSS 1
+    CSS 2
+      magrin
+      border
+      padding
+      element
+      ---------------长度
+      1.float
+      2.:nth-child(index)
+        有10个div
+        div:nth-child(2)
+
+
+
+PM
+1.默认
+    float
+    坐标定位
+        -----相对 parent
+        -----绝对 child
+
+        -----固定 导航栏/左右广告
+
+
+    每一次要加载的图片  合并   内存
+    成为一张图片  一次
+
+
+    width 140px
+    height 34px
+
+
+    lw 60px
+    w 597px
+
+    表项页的总结：
+    1.使用class,不适用id
+    2.由外向内写代码,由左向右写代码
+    3.多使用类别元素,少使用id
+    4.有微调的时间
+
+
+背景:
+#D6CAC5
+b1 #00A9E1
+b2 #ODBA37
+b3 #E30000
